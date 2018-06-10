@@ -15,8 +15,6 @@ blank_list = ["(1)_____", "(2)_____", "(3)_____", "(4)_____"]
 guesses_allowed = 5
 quiz_questions = easy_questions
 quiz_answers = easy_answers
-level_index = 0
-level_paragraph = quiz_questions[level_index].split(" ")
 
 def test_for_blank(word):
     if word.find("(") >= 0:
@@ -26,7 +24,6 @@ def test_for_blank(word):
 
 def replace_blank(user_guess, level_paragraph):
     index = 0
-    blank = blank_list[answer_index]
     for word in level_paragraph:
         if blank in word:
              level_paragraph[index] = word.replace(word, user_guess)
@@ -36,28 +33,33 @@ def replace_blank(user_guess, level_paragraph):
     user_answer = level_paragraph
     print user_answer
 
-print ' '.join(level_paragraph) + "\n"
 
 
 guesses = 0
 answer_index = 0
-for word in level_paragraph:
-    while test_for_blank(word) == True:
-        if guesses < guesses_allowed:
-            user_answer = []
-            blank = blank_list[answer_index]
-            level_answers = quiz_answers[level_index]
-            question_answer = level_answers[answer_index]
-            user_guess = raw_input("What should replace " + blank + "? ")
-            if user_guess == question_answer:
-                replace_blank(user_guess, level_paragraph)
-                answer_index += 1
-                max_answer_index = 3
-                if answer_index > max_answer_index:
-                    break
+
+for level in quiz_questions:
+    level_index = 0
+    level_paragraph = quiz_questions[level_index].split(" ")
+    level_answers = quiz_answers[level_index]
+    print ' '.join(level_paragraph)
+    for word in level_paragraph:
+        while test_for_blank(word) == True:
+            max_answer_index = 3
+            if answer_index > max_answer_index:
+                break
+            if guesses < guesses_allowed:
+                user_answer = []
+                blank = blank_list[answer_index]
+                question_answer = level_answers[answer_index]
+                user_guess = raw_input("What should replace " + blank + "? ")
+                if user_guess == question_answer:
+                    replace_blank(user_guess, level_paragraph)
+                    answer_index += 1
+                else:
+                    guesses += 1
+                    print "Try again." + "\n" +"Guesses: " + str(guesses) + "/" + str(guesses_allowed)
             else:
-                guesses += 1
-                print "Try again." + "\n" +"Guesses: " + str(guesses) + "/" + str(guesses_allowed)
-        else:
-            print "Game over. :( Study harder."
-            break
+                print "Game over. :( Study harder."
+                break
+        level_index += 1
