@@ -70,7 +70,7 @@ def end_game(level_index):
         return "Game over. Study harder."
 
 #quiz difficulty prompt --
-def choose_difficulty (quiz_questions, quiz_answers):
+def choose_difficulty ():
     user_difficulty = raw_input("Easy, medium, or hard? ")
     if user_difficulty.lower() == "easy":
         quiz_questions = easy_questions
@@ -102,7 +102,7 @@ def choose_difficulty (quiz_questions, quiz_answers):
 def guesses_allowed():
     guesses_allowed = raw_input("Choose how many guesses you get per level before you lose. Be sure to enter a positive integer. ")
     if guesses_allowed > 0:
-        print "You'll have " + guesses_allowed + " guesses per question."
+        print "You'll have " + guesses_allowed + " guesses per level."
     else:
         print "Enter a positive integer."
         guesses_allowed() # having a problem recalling this for some reason?
@@ -114,15 +114,7 @@ def play_level (level_paragraph, level_answers, guesses_allowed):
         answer_index = 0
         max_answer_index = 3
         answer_question (answer_index, max_answer_index, guesses, guesses_allowed, level_paragraph, level_answers, word)
-        # while answer_index < max_answer_index:
-        #     blank = blank_list[answer_index]
-        #     user_answer = []
-        #     question_answer = level_answers[answer_index]
-        #     if guesses < guesses_allowed:
-        #         answer_question(question_answer, level_paragraph, blank, user_answer, guesses, answer_index)
-        #     else:
-        #         return end_game(level_index)
-#long version
+
 def answer_question (answer_index, max_answer_index, guesses, guesses_allowed, level_paragraph, level_answers, word):
     while test_for_blank(word) == True:
         if answer_index > max_answer_index:
@@ -141,31 +133,33 @@ def answer_question (answer_index, max_answer_index, guesses, guesses_allowed, l
         else:
             return "You lost! Study harder."
 
-# def answer_question(question_answer, level_paragraph, blank, user_answer, guesses, answer_index):
-#     user_guess = raw_input("What should replace " + blank + "? ")
-#     if user_guess.lower() == question_answer:
-#         replace_blank(user_guess, level_paragraph, user_answer, blank)
-#         answer_index += 1
-#     else:
-#         guesses += 1
-#         print "\nTry again. " + str(guesses) + "/" + str(guesses_allowed) + "\n"
 
 
+#
+# def play_game ():
+#     quiz_questions = []
+#     quiz_answers = []
+#     print '''
+#     |--------------------------------------------|
+#     |          PYTHON STUDY REVIEW QUIZ          |
+#     |--------------------------------------------|
+#     '''
+#     choose_difficulty(quiz_questions, quiz_answers)
+#     guesses_allowed()
+#     start_game(quiz_questions, quiz_answers, guesses_allowed)
 
-def play_game ():
-    quiz_questions = []
-    quiz_answers = []
+
+def play_game(): #quiz_questions, quiz_answers, guesses_allowed
+    # quiz_questions = []
+    # quiz_answers = []
     print '''
     |--------------------------------------------|
     |          PYTHON STUDY REVIEW QUIZ          |
     |--------------------------------------------|
     '''
-    choose_difficulty(quiz_questions, quiz_answers)
+    choose_difficulty()
     guesses_allowed()
-    start_game(quiz_questions, quiz_answers, guesses_allowed)
-
-
-def start_game(quiz_questions, quiz_answers, guesses_allowed):
+    #start_game(quiz_questions, quiz_answers, guesses_allowed)
     level_index = 0
     for level in quiz_questions:
         level_paragraph = quiz_questions[level_index].split(" ")
@@ -174,9 +168,15 @@ def start_game(quiz_questions, quiz_answers, guesses_allowed):
         play_level(level_paragraph, level_answers, guesses_allowed)
         level_index += 1
 
-# play_game()
-quiz_questions = easy_questions
-quiz_answers = easy_answers
-guesses_allowed = 10
+play_game()
+# quiz_questions = easy_questions
+# quiz_answers = easy_answers
+# guesses_allowed = 10
 
-start_game(quiz_questions, quiz_answers, guesses_allowed)
+#################################################################
+#                                                               #
+#                           START GAME                          #
+#                                                               #
+#################################################################
+
+# start_game(quiz_questions, quiz_answers, guesses_allowed)
